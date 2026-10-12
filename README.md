@@ -127,9 +127,55 @@ tested for this project. Model compliance is not guaranteed by a valid file.
 SmoothDev Skills provides agent guidance, not a Git hook or technical enforcement
 of the approval rules.
 
+## Versioning and releases
+
+The version's single source is `metadata.version` in
+[SKILL.md](skills/smoothdev-skills/SKILL.md). It is a quoted string in the YAML
+frontmatter. There is no separate VERSION file. A development version in the
+metadata does not establish that a release has been published; see
+[CHANGELOG.md](CHANGELOG.md) for unreleased work and published release history.
+
+The project's versioning policy follows [Semantic Versioning](https://semver.org/).
+The compatibility contract is the documented development workflow and its
+approval rules. The initial development version is `0.1.0`. During `0.x`, this
+project increments minor for workflow changes and patch for compatible
+corrections; the contract is still being established. Move to `1.0.0` when the
+contract is accepted as stable for users to rely on.
+
+From `1.0.0`, choose the increment by its effect on that contract:
+
+| Change | Increment | Example |
+| --- | --- | --- |
+| Incompatible workflow or approval-rule change | Major; reset minor and patch | Change a required approval stage or what an approval authorizes. |
+| Compatible capability addition | Minor; reset patch | Add an optional review aid that preserves existing stages and approval rules. |
+| Compatible correction | Patch | Fix wording that incorrectly describes an existing rule without changing that rule. |
+
+A small diff can still be incompatible. Several reviewed commits may make up
+one release; versions do not increment for every commit.
+
+### Preparing a later release
+
+1. Select the verified changes to release and the appropriate version. Update
+   the skill metadata and prepare the matching changelog entry as one coherent,
+   reviewed change. These changes require their own explicit commit approval.
+2. Verify that the approved release commit contains the intended skill,
+   documentation, version, and change record.
+3. When release tagging is authorized, create `v<version>` at that exact verified
+   commit, matching its metadata value. For example, `v0.1.0` identifies release
+   contents whose skill metadata version is `0.1.0`.
+4. Push or publish only when those operations are separately authorized. A local
+   commit does not authorize a tag, merge, push, or publication.
+
+Published version contents must stay unchanged, and their release tags must not
+be moved to different contents. Corrections belong in a new version. Development
+changes stay under **Unreleased**. Preparing a version and changelog entry does
+not itself publish a release; publication requires the actual authorized release
+operation.
+
 ## Project documents
 
 - [Skill instructions](skills/smoothdev-skills/SKILL.md)
 - [Workflow specification](specs.md)
 - [Implementation plan](plan.md)
+- [Changelog](CHANGELOG.md)
 - [MIT license](LICENSE)
