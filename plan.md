@@ -2,10 +2,13 @@
 
 ## Specification baseline
 
-This plan implements the agreed [specification](specs.md), recorded in commit
-`e585a715688b38a7dabd730890b1b38c2e1406b4`, and the subsequently agreed packaging
-and versioning decisions below. Acceptance criterion IDs refer to that
-specification.
+This plan implements the agreed [workflow specification](specs.md), recorded in
+commit `e585a715688b38a7dabd730890b1b38c2e1406b4`, and the agreed packaging and
+versioning decisions below. Acceptance criterion IDs refer to that specification.
+
+U4 is the agreed execution step for publishing this repository's first release.
+It does not change the workflow specification or add a release requirement to
+every development task using the skill.
 
 The working branch is `feat/smoothdev-workflow`, based on `master`.
 
@@ -26,12 +29,17 @@ The working branch is `feat/smoothdev-workflow`, based on `master`.
   a model API alone does not provide it.
 - Keep all workflow stages together in U1 so a partial implementation cannot
   omit necessary approval boundaries. Separate public onboarding and versioning
-  policy into U2 and U3 because they have distinct reviewable purposes.
+  policy into U2 and U3 because they have distinct reviewable purposes. U4 has
+  the separate outcome of preparing and publishing this repository's first
+  release; it does not change the reusable skill's workflow stages.
 - Validate both structure and decisions. Format validation checks the skill
   file; scenario review checks how its instructions apply to development
   situations. Neither guarantees identical behavior across every host or model.
 - Use the repository's source directory as the distributable skill. Do not add
   an archive, installer, hooks, automatic commits, or release automation.
+- U4 uses reviewed release preparation and explicitly authorized GitHub release
+  actions. Preserve the separate specification, plan, and implementation commits
+  when integrating into `master`.
 
 ## Major steps and execution order
 
@@ -39,15 +47,24 @@ The working branch is `feat/smoothdev-workflow`, based on `master`.
 2. **Explain public use:** U2 documents installation, invocation, and interaction.
 3. **Define versioned changes:** U3 documents versioning and release history.
 4. **Verify the combined result:** check the specification, plan, and delivered
-   files together, then obtain developer acceptance of final verification.
+   files together, then obtain developer acceptance of the evidence before U4.
+5. **Deliver the first release:** U4 prepares the release commit and publishes
+   `v0.1.0` through separately approved operations, then verifies the published
+   result and obtains final acceptance.
 
-Execute **U1 → U2 → U3**. Each leaf below is one meaningful, bounded result and
-one intended commit. Its subtasks stay within that unit; they do not justify
+Execute **U1 → U2 → U3 → accepted combined verification → U4**. Each leaf below
+is one meaningful, bounded result with its own intended preparation or
+implementation commit. Its subtasks stay within that unit; they do not justify
 separate commits that deliver an incomplete workflow or broken documentation.
+If integration creates a merge commit, its specific diff and operation require
+separate approval; release tagging and publication never create blanket commit
+permission.
 
 The plan itself requires review and its own explicitly approved documentation
 commit before U1 begins: `docs: record SmoothDev Skills implementation plan`.
 Plan acceptance is not approval of this commit or any implementation commit.
+Material specification and plan revisions also require their own separately
+reviewed and explicitly approved documentation commits before affected work.
 
 ## U1 — Complete portable development skill
 
@@ -205,9 +222,69 @@ its own reviewed, approved, and verified commit.
 
 **Intended commit:** `docs: define versioning and release policy`.
 
-## Combined final verification
+## U4 — First release
 
-- Check all nine specification acceptance criteria against the final skill,
+**Purpose:** deliver the initial skill and its documentation as the verified
+GitHub release **v0.1.0** on `master`, preserving the approval boundaries in
+**AC9**. Its release completion criteria below are delivery checks for this
+repository, separate from the reusable workflow's acceptance criteria.
+
+**Files and release surfaces:** update `CHANGELOG.md`; verify
+`skills/smoothdev-skills/SKILL.md` metadata. Integration may update the remote
+branches; the release creates a Git tag and GitHub release record. The initial
+metadata is already `0.1.0`, so it needs no bump for this first release.
+
+**Prerequisites:** this plan revision has its own approved and verified
+documentation commit; U1–U3 are reviewed and
+committed; combined verification of the skill and documentation is accepted.
+
+**Actions and boundaries:**
+
+- Review the intended first-release contents and confirm version `0.1.0` against
+  the actual metadata. Move the completed Unreleased notes to a `0.1.0` entry
+  with the agreed release date, keeping an Unreleased heading for future work.
+- Explain and verify the actual preparation diff, then obtain explicit approval
+  for its own release-preparation commit. A prepared version or changelog entry
+  does not itself prove publication.
+- Inspect current remote branch and tag state before integration. Present the
+  exact merge and outbound operations for approval before execution. Integrate
+  the reviewed work into `master` while preserving its individual commits;
+  obtain explicit approval for any merge operation that creates a commit.
+- Verify the actual release commit on `master` against the accepted contents.
+  Create its matching `v0.1.0` tag and GitHub release only after the concrete
+  release actions are authorized. Publish notes matching the approved changelog.
+- Verify the published tag, resolved commit, release version, and release URL.
+  Report the evidence and obtain final developer acceptance. Do not move or
+  replace an existing published tag or silently amend release contents.
+- Keep the release unit active through questions, revisions, preparation,
+  publication, and verification. A failed publication does not authorize a
+  different release or unreviewed changes; inspect the actual state before any
+  retry. Preserve the current unit and explain any blocker.
+
+**Dependency impact and risks:** users obtain the skill from the published
+revision. Changelog, metadata, branch contents, tag, and release notes must
+identify the same version and accepted content. Remote changes or an existing
+tag can invalidate the proposed operation. Do not claim a live release from
+local metadata, a prepared entry, or an unverified command result.
+
+**Verification:** inspect the actual preparation diff; verify metadata and
+dated notes; compare integrated contents with the reviewed release tree and
+confirm the meaningful history is retained. Verify the published Git tag and
+GitHub release through remote evidence. Report actual identities and distinguish
+prepared, locally tagged, pushed, and published states if an action is blocked.
+
+**Complete when:** the release-preparation commit is approved and verified,
+authorized integration and publication have succeeded, the matching release
+tag and GitHub release are supported by remote evidence, and the developer
+accepts final release verification.
+
+**Intended preparation commit:** `chore: prepare SmoothDev Skills 0.1.0 release`.
+This approves no merge or publication by itself; those operations are reviewed
+and authorized when their concrete contents and actions are ready.
+
+## Combined verification and final acceptance
+
+- Before U4, check AC1–AC9 against the final skill,
   public guidance, and scenario evidence.
 - Verify each planned unit's completion and actual commit, explaining any
   deviations or unresolved work.
@@ -217,8 +294,12 @@ its own reviewed, approved, and verified commit.
   Confirm that metadata and the changelog accurately describe the development
   version without implying publication.
 - Present the resulting behavior, acceptance evidence, actual commit list,
-  limitations, and uncommitted changes. Obtain explicit developer acceptance of
-  final verification before declaring the workflow complete.
+  limitations, and uncommitted changes. Obtain developer acceptance of this
+  combined source verification before release preparation. This acceptance does
+  not authorize a release-preparation commit or any outbound operation.
+- After U4, verify its delivery checks against the actual release, tag, commit,
+  metadata, and changelog, alongside the nine workflow criteria. Obtain explicit
+  acceptance of final release verification before declaring delivery complete.
 - If verification reveals a defect, return to the affected agreement or plan
   gate when required and handle the fix through the full reviewed unit loop.
   Do not silently commit cleanup.
